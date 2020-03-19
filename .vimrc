@@ -22,7 +22,6 @@ set wildmode=longest,list,full
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o<Paste>
 
 
-
 """"""""""""""""""
 """ Wibdows
 """"""""""""""""""
@@ -54,7 +53,7 @@ nnoremap <leader>>		<C-w>>
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %{wordcount().words}\ %P
 
 " Navigation
-inoremap <leader><leader>     	<Esc>/<++><Enter>"_c4l
+inoremap <leader><leader>     	<Esc>/sv<Enter>"_c4l
 vnoremap <leader><leader>     	<Esc>/<++><Enter>"_c4l
 map <leader><leader>          	<Esc>/<++><Enter>"_c4l
 
@@ -77,7 +76,7 @@ nnoremap K			:bn<Enter>
 nnoremap <leader><leader>l	:tabn<Enter>
 nnoremap <leader><leader>h	:tabp<Enter>
 nnoremap <esc><esc>		:noh<Enter>
-nnoremap <leader>f		:Goyo<Enter>
+nnoremap <leader>f		:Goyo 120x30<Enter>
 noremap  <C-\>	        	:NERDTreeToggle<Enter>
 
 
@@ -87,26 +86,35 @@ noremap  <C-\>	        	:NERDTreeToggle<Enter>
 """""""""""""""""""""
 colorscheme ron
 hi Pmenu ctermbg=white
-hi StatusLine ctermbg=NONE cterm=NONE
-hi StatusLineNC ctermbg=NONE cterm=NONE
-hi VertSplit ctermbg=NONE cterm=NONE
+hi StatusLine 	ctermbg=None ctermfg=white  	cterm=bold
+hi StatusLineNC ctermbg=None ctermfg=darkgrey  	cterm=None
+hi VertSplit 	ctermbg=None ctermfg=None 	cterm=None
 
 " spelling
 hi clear SpellBad
-hi SpellBad 	cterm=undercurl ctermfg=red 
-hi SpellCap 	cterm=undercurl ctermfg=cyan ctermbg=None
-hi SpellLocal 	cterm=undercurl ctermfg=white ctermbg=None
-hi SpellRare 	cterm=undercurl ctermfg=white ctermbg=None
+hi SpellBad 	ctermfg=red 	ctermbg=None	cterm=undercurl 
+hi SpellCap 	ctermfg=cyan 	ctermbg=None    cterm=undercurl 
+hi SpellLocal 	ctermfg=white 	ctermbg=None    cterm=undercurl 
+hi SpellRare 	ctermfg=white 	ctermbg=None    cterm=undercurl 
 
-
+" search
+set hls
+hi Search 	ctermfg=yellow  ctermbg=None 	cterm=standout
 
 """"""""""""""""""""
 """ Autocomplete
 """"""""""""""""""""
-nnoremap <leader>a	        :MUcompleteAutoToggle<CR>
 set cot+=menuone,noselect
 set shortmess+=c   
+nnoremap <leader>a	        :MUcompleteAutoToggle<CR>
 
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
 
 
 """""""""""""""""""""
@@ -119,9 +127,9 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree'
+Plug 'mkomod/trepl'
 
 """ Autocomplete
 Plug 'lifepillar/vim-mucomplete'
