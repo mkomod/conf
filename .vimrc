@@ -1,6 +1,8 @@
 """"""""""""""""""
 """ Basics
 """"""""""""""""""
+let vimpath="~/.config/nvim/"
+
 set encoding=utf-8
 
 let mapleader=","
@@ -25,25 +27,22 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o<P
 """"""""""""""""""
 """ Wibdows
 """"""""""""""""""
-map <leader>h 			<C-w>h
-map <leader>j 			<C-w>j
-map <leader>k 			<C-w>k
-map <leader>l 			<C-w>l
+nnoremap <leader>h 		<C-w>h
+nnoremap <leader>j 		<C-w>j
+nnoremap <leader>k 		<C-w>k
+nnoremap <leader>l 		<C-w>l
 
 " positioning 
-map <C-H> 			<C-w>H
-map <C-J> 			<C-w>J
-map <C-K> 			<C-w>K
-map <C-L> 			<C-w>L
+nnoremap <leader>u		<C-w>H
+nnoremap <leader>i		<C-w>J
+nnoremap <leader>o		<C-w>K
+nnoremap <leader>p		<C-w>L
 
 " size
-nnoremap <leader>-		:resize -1<Cr>
-nnoremap <leader>_		:resize -5<Cr>
-nnoremap <leader>=		:resize +1<Cr>
-nnoremap <leader>+		:resize +5<Cr>
-nnoremap <leader><		<C-w><
-nnoremap <leader>>		<C-w>>
-
+nnoremap _			:vertical resize -5<Cr>
+nnoremap +			:vertical resize +5<Cr>
+nnoremap -			:resize -5<Cr>
+nnoremap =			:resize +5<Cr>
 
 
 """"""""""""""""""
@@ -53,9 +52,9 @@ nnoremap <leader>>		<C-w>>
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %{wordcount().words}\ %P
 
 " Navigation
-inoremap <leader><leader>     	<Esc>/sv<Enter>"_c4l
+inoremap <leader><leader>     	<Esc>/<++><Enter>"_c4l
 vnoremap <leader><leader>     	<Esc>/<++><Enter>"_c4l
-map <leader><leader>          	<Esc>/<++><Enter>"_c4l
+nnoremap <leader><leader>       <Esc>/<++><Enter>"_c4l
 
 " Copy-Paste (neovim)
 vnoremap <C-c>               	"+y
@@ -77,7 +76,7 @@ nnoremap <leader><leader>l	:tabn<Enter>
 nnoremap <leader><leader>h	:tabp<Enter>
 nnoremap <esc><esc>		:noh<Enter>
 nnoremap <leader>f		:Goyo 120x30<Enter>
-noremap  <C-\>	        	:NERDTreeToggle<Enter>
+nnoremap <C-\>	        	:NERDTreeToggle<Enter>
 
 
 
@@ -85,7 +84,7 @@ noremap  <C-\>	        	:NERDTreeToggle<Enter>
 """ Colour Scheme
 """""""""""""""""""""
 colorscheme ron
-hi Pmenu ctermbg=white
+hi Pmenu 	ctermbg=black ctermfg=white
 hi StatusLine 	ctermbg=None ctermfg=white  	cterm=bold
 hi StatusLineNC ctermbg=None ctermfg=darkgrey  	cterm=None
 hi VertSplit 	ctermbg=None ctermfg=None 	cterm=None
@@ -106,7 +105,6 @@ hi Search 	ctermfg=yellow  ctermbg=None 	cterm=standout
 """"""""""""""""""""
 set cot+=menuone,noselect
 set shortmess+=c   
-nnoremap <leader>a	        :MUcompleteAutoToggle<CR>
 
 inoremap " ""<left>
 inoremap ' ''<left>
@@ -120,23 +118,59 @@ inoremap {;<CR> {<CR>};<ESC>O
 """""""""""""""""""""
 """ Plugins 
 """""""""""""""""""""
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+if empty(glob(vimpath . '/autoload/plug.vim'))
+  silent execute '!curl -fLo ' . vimpath . '/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin(vimpath . '/plugged')
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree'
 Plug 'mkomod/trepl'
 
 """ Autocomplete
-Plug 'lifepillar/vim-mucomplete'
-let g:mucomplete#enable_auto_at_startup = 1
-let g:mucomplete#completion_delay = 250
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 """ Scala
 Plug 'derekwyatt/vim-scala'
+
+""" R
+Plug 'jalvesaq/Nvim-R'
+
+""" Latex
+Plug 'lervag/vimtex'
+
 call plug#end()
+
+
+"""""""""""""""""""""
+""" coc-nvim
+"""""""""""""""""""""
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab> 	pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : coc#refresh()
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+"""""""""""""""""""""
+""" R
+"""""""""""""""""""""
+let R_in_buffer = 0
+let R_term = 'urxvt'
+let R_objbr_place = 'BOTTOM'
+let R_objbr_h = 10
+let R_nvimpager = "tab"
+let R_pdfviewer = "zathura"
+vmap <Space> <Plug>RDSendSelection
+nmap <Space> <Plug>RDSendLine
+
+
+"""""""""""""""""""""
+""" LaTeX
+"""""""""""""""""""""
+source ~/.config/nvim/LatexSnips.vim
 
