@@ -1,7 +1,7 @@
 """"""""""""""""""
 """ Basics
 """"""""""""""""""
-let vimpath="~/.config/nvim/"
+let vimpath="~/.config/vim/"
 
 set encoding=utf-8
 
@@ -62,6 +62,7 @@ map <C-p>                    	"+P
 
 " Enable/Disable spelling 
 nnoremap <leader>s	        :setlocal spell! spelllang=en_gb<Enter>
+inoremap <C-s>	        	<C-X>s
 
 " Compile
 map <leader>c               	:w! \| !~/.scripts/tools/compiler <c-r>%<CR>
@@ -89,6 +90,9 @@ hi StatusLine 	ctermbg=None ctermfg=white  	cterm=bold
 hi StatusLineNC ctermbg=None ctermfg=darkgrey  	cterm=None
 hi VertSplit 	ctermbg=None ctermfg=None 	cterm=None
 
+" signcol
+hi SignColumn 	ctermbg=None 	ctermfg=None 	cterm=None
+
 " spelling
 hi clear SpellBad
 hi SpellBad 	ctermfg=red 	ctermbg=None	cterm=undercurl 
@@ -106,13 +110,7 @@ hi Search 	ctermfg=yellow  ctermbg=None 	cterm=standout
 set cot+=menuone,noselect
 set shortmess+=c   
 
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
 
 
 """""""""""""""""""""
@@ -125,20 +123,24 @@ endif
 
 call plug#begin(vimpath . '/plugged')
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
-Plug 'mkomod/trepl'
+" Plug 'mkomod/trepl'
 
 """ Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 """ Scala
-Plug 'derekwyatt/vim-scala'
+" Plug 'derekwyatt/vim-scala'
 
 """ R
-Plug 'jalvesaq/Nvim-R'
+" Plug 'jalvesaq/Nvim-R'
 
 """ Latex
-Plug 'lervag/vimtex'
+" Plug 'lervag/vimtex'
+
+""" vim command line
+Plug 'jalvesaq/vimcmdline'
 
 call plug#end()
 
@@ -156,21 +158,33 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+hi DiffDelete 	ctermbg=None 	ctermfg=red 	cterm=None
+hi DiffAdd 	ctermbg=None 	ctermfg=green 	cterm=None
+hi DiffChange 	ctermbg=None 	ctermfg=None 	cterm=None
+hi DiffText 	ctermbg=None 	ctermfg=None 	cterm=None
+
+
 """""""""""""""""""""
 """ R
 """""""""""""""""""""
-let R_in_buffer = 0
-let R_term = 'urxvt'
-let R_objbr_place = 'BOTTOM'
-let R_objbr_h = 10
-let R_nvimpager = "tab"
-let R_pdfviewer = "zathura"
-vmap <Space> <Plug>RDSendSelection
-nmap <Space> <Plug>RDSendLine
+" let R_in_buffer = 0
+" let R_term = 'urxvt'
+" let R_objbr_place = 'BOTTOM'
+" let R_objbr_h = 10
+" let R_nvimpager = "tab"
+" let R_pdfviewer = "zathura"
+" vmap <Space> <Plug>RDSendSelection
+" nmap <Space> <Plug>RDSendLine
 
 
 """""""""""""""""""""
 """ LaTeX
 """""""""""""""""""""
-source ~/.config/nvim/LatexSnips.vim
+" source ~/.config/nvim/LatexSnips.vim
+
+
+"""""""""""""""""""""
+""" Vim CMD
+"""""""""""""""""""""
+" let cmdline_external_term_cmd = " %s &"
 
