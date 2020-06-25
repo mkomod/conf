@@ -24,3 +24,5 @@ link_config_if_not_found vimrc $HOME/.vim/vimrc
 link_config_if_not_found tmux.conf $HOME/.config/tmux/tmux.conf
 link_config_if_not_found bashrc $HOME/.bashrc
 link_config_if_not_found bash_profile $HOME/.bash_profile
+
+echo "Setup complete"
