@@ -1,0 +1,26 @@
+#!/bin/bash
+
+mkdir_if_does_not_exist() {
+   if [[ ! -e $1 ]]
+   then
+       echo "Making directory $1"
+       mkdir $1
+   fi 
+}
+
+link_config_if_not_found() {
+    if [[ ! -f $2 ]]
+    then
+	echo "Linking $1 to $2"
+	ln $1 $2
+    fi
+}
+
+mkdir_if_does_not_exist $HOME/.config
+mkdir_if_does_not_exist $HOME/.config/tmux
+mkdir_if_does_not_exist $HOME/.vim
+
+link_config_if_not_found vimrc $HOME/.vim/vimrc
+link_config_if_not_found tmux.conf $HOME/.config/tmux/tmux.conf
+link_config_if_not_found bashrc $HOME/.bashrc
+link_config_if_not_found bash_profile $HOME/.bash_profile

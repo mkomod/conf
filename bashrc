@@ -9,6 +9,12 @@ shopt -s autocd
 alias ls="ls -hN --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
+	ls="ls -hN --color=auto --group-directories-first" \
+	mv="mv -i" \
+	diff="diff --color=auto" \
+	grep="grep --color=auto" \
+	tmux="tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf" \
+	nvim="vim"
 
 
 # PS1=" \e[33;1m\h \e[34m\W\e[0m \$ "

@@ -1,7 +1,7 @@
 """"""""""""""""""
 """ Basics
 """"""""""""""""""
-let vimpath="~/.config/vim/"
+let vimpath="~/.vim/"
 
 set encoding=utf-8
 
@@ -128,7 +128,7 @@ Plug 'scrooloose/nerdtree'
 " Plug 'mkomod/trepl'
 
 """ Autocomplete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 """ Scala
 " Plug 'derekwyatt/vim-scala'
@@ -148,20 +148,20 @@ call plug#end()
 """""""""""""""""""""
 """ coc-nvim
 """""""""""""""""""""
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
 
-inoremap <silent><expr> <Tab> 	pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : coc#refresh()
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <silent><expr> <Tab> 	pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : coc#refresh()
+" inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-hi DiffDelete 	ctermbg=None 	ctermfg=red 	cterm=None
-hi DiffAdd 	ctermbg=None 	ctermfg=green 	cterm=None
-hi DiffChange 	ctermbg=None 	ctermfg=None 	cterm=None
-hi DiffText 	ctermbg=None 	ctermfg=None 	cterm=None
+" hi DiffDelete 	ctermbg=None 	ctermfg=red 	cterm=None
+" hi DiffAdd 	ctermbg=None 	ctermfg=green 	cterm=None
+" hi DiffChange 	ctermbg=None 	ctermfg=None 	cterm=None
+" hi DiffText 	ctermbg=None 	ctermfg=None 	cterm=None
 
 
 """""""""""""""""""""
