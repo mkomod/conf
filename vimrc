@@ -125,7 +125,7 @@ call plug#begin(vimpath . '/plugged')
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
-" Plug 'mkomod/trepl'
+Plug 'mkomod/trepl'
 
 """ Autocomplete
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -186,5 +186,7 @@ call plug#end()
 """""""""""""""""""""
 """ Vim CMD
 """""""""""""""""""""
-" let cmdline_external_term_cmd = " %s &"
+" let cmdline_external_term_cmd = "screen %s &"
+let cmdline_map_start = '<LocalLeader>rr'
+let cmdline_vsplit = 1
 
